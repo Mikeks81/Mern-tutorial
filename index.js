@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const https = require('https')
+const fs = require('fs')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const keys = require('./config/keys')
@@ -22,6 +24,15 @@ app.use(passport.session())
 // authroutes returns a function and we call it and poss app value into thtat function
 require('./routes/authRoutes')(app)
 
+const httpsOptions = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem')
+}
+
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT)
+const server = https.createServer(httpsOptions, app).listen(PORT, () => {
+  console.log('server running at ' + PORT)
+})
+
+//app.listen(PORT)
