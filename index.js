@@ -22,7 +22,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // authroutes returns a function and we call it and poss app value into thtat function
-console.log(keys)
 require('./routes/authRoutes')(app)
 let httpsOptions = {}
 if (process.env.NODE_ENV === 'develop') {
@@ -36,8 +35,10 @@ if (process.env.NODE_ENV === 'develop') {
 
 const PORT = process.env.PORT || 5000
 
-const server = https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log('server running at ' + PORT)
-})
-
-//app.listen(PORT)
+if (process.env.NODE_ENV === 'production') {
+  const server = https.createServer(httpsOptions, app).listen(PORT, () => {
+    console.log('server running at ' + PORT)
+  })
+} else {
+  app.listen(PORT)
+}
