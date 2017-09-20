@@ -22,13 +22,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // authroutes returns a function and we call it and poss app value into thtat function
+console.log(process.env)
 require('./routes/authRoutes')(app)
 let httpsOptions = {}
 if (process.env.NODE_ENV === 'develop') {
-  httpsOptions = {
-    key: fs.readFileSync('./key.pem'),
-    cert: fs.readFileSync('./cert.pem')
-  }
 } else {
   httpsOptions = {}
 }
