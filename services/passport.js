@@ -22,7 +22,8 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback'
+      callbackURL: '/auth/google/callback',
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       // persisint to the db is still an asych call so you must use promises beofore calling done
