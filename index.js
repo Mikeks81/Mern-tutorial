@@ -28,7 +28,7 @@ let httpsOptions = {
   key: fs.readFileSync('./key.pem'),
   cert: fs.readFileSync('./cert.pem')
 }
-if (process.env.NODE_ENV === 'development') httpsOptions = {}
+if (process.env.NODE_ENV === 'production') httpsOptions = {}
 
 const PORT = process.env.PORT || 5000
 
