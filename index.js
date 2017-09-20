@@ -23,6 +23,8 @@ app.use(passport.session())
 
 // authroutes returns a function and we call it and poss app value into thtat function
 require('./routes/authRoutes')(app)
+
+// loading up ssl certs if in something other than production -- heroku has it's own certs
 let httpsOptions = {}
 if (process.env.NODE_ENV !== 'production') {
   httpsOptions = {
@@ -35,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const PORT = process.env.PORT || 5000
 
+// using https for localhost to satisfy bungies API requirements
 if (process.env.NODE_ENV === 'production') {
   app.listen(PORT)
 } else {

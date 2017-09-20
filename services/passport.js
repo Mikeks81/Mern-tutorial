@@ -49,8 +49,7 @@ passport.use(
       tokenURL: 'https://www.bungie.net/platform/app/oauth/token/',
       clientID: keys.bungieClientId,
       clientSecret: keys.bungieSecret,
-      callbackURL:
-        'https://cryptic-plateau-44984.herokuapp.com/auth/bungie/callback'
+      callbackURL: `${keys.siteHost}/auth/bungie/callback`
     },
     (accessToken, refreshToken, params, profile, done) => {
       User.findOneAndUpdate(
