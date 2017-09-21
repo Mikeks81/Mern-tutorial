@@ -27,7 +27,10 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // persisint to the db is still an asych call so you must use promises beofore calling done
-      User.findOne({ googleId: profile.id }).then(existingUser => {
+      User.findOneAndUpdate({
+        googleId: profile.id,
+        lastLogIn: new Date()
+      }).then(existingUser => {
         if (existingUser) {
           done(null, existingUser)
         } else {
@@ -63,6 +66,7 @@ passport.use(
           refreshToken: refreshToken,
           refreshExp: params.refresh_expires_in,
           refreshSet: new Date(),
+          lastLogIn: new Date(),
           accessType: params.token_type
         }
       ).then(exisitingUser => {
@@ -77,6 +81,7 @@ passport.use(
             refreshToken: refreshToken,
             refreshExp: params.refresh_expires_in,
             refreshSet: new Date(),
+            lastLogIn: new Date(),
             accessType: params.token_type
           })
             .save()

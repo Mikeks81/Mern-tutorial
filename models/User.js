@@ -11,6 +11,7 @@ const userSchema = new Schema({
   refreshExp: Number,
   refreshSet: Date,
   accessType: String,
+  lastLogIn: Date,
   createdAt: { type: Date, default: Date.now }
 })
 
