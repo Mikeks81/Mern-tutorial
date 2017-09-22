@@ -26,12 +26,19 @@ passport.use(
       callbackURL: '/auth/google/callback',
       proxy: true
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, params, profile, done) => {
       // persisint to the db is still an asych call so you must use promises beofore calling done
       Logger('looking up existing User')
       const existingUser = await User.findOneAndUpdate(
         { googleId: profile.id },
-        { lastLogIn: new Date() },
+        {
+          lastLogIn: new Date(),
+          displayName: profile.displayName,
+          familyName: profile.name.familyName,
+          givenName: profile.name.givenName,
+          emails: profile.emails,
+          gender: profile.gender
+        },
         { new: true }
       )
       if (existingUser) {
@@ -42,7 +49,12 @@ passport.use(
       // persisint to the db is still an asych call so you must use promises beofore calling done
       const user = await new User({
         googleId: profile.id,
-        lastLogIn: new Date()
+        lastLogIn: new Date(),
+        displayName: profile.displayName,
+        familyName: profile.name.familyName,
+        givenName: profile.name.givenName,
+        emails: profile.emails,
+        gender: profile.gender
       }).save()
       done(null, user)
     }

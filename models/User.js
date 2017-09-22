@@ -2,6 +2,11 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const userSchema = new Schema({
+  givenName: String,
+  familyName: String,
+  displayName: String,
+  gender: String,
+  emails: [],
   googleId: String,
   bungieId: String,
   accessToken: String,
@@ -12,6 +17,7 @@ const userSchema = new Schema({
   refreshSet: Date,
   accessType: String,
   lastLogIn: Date,
+  logInCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 })
 
