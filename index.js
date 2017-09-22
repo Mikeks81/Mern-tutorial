@@ -26,6 +26,7 @@ require('./routes/authRoutes')(app)
 
 // loading up ssl certs if in something other than production -- heroku has it's own certs
 let httpsOptions = {}
+// setting any http
 if (process.env.NODE_ENV !== 'production') {
   httpsOptions = {
     key: fs.readFileSync('./key.pem'),
@@ -38,7 +39,8 @@ if (process.env.NODE_ENV !== 'production') {
 const PORT = process.env.PORT || 5000
 
 // using https for localhost to satisfy bungies API requirements
-if (process.env.NODE_ENV === 'production') {
+// setting https to be false all the time for now
+if (true || process.env.NODE_ENV === 'production') {
   app.listen(PORT)
 } else {
   const server = https.createServer(httpsOptions, app).listen(PORT, () => {

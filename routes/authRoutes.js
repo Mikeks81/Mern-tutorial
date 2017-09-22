@@ -1,4 +1,5 @@
 const passport = require('passport')
+const Logger = require('../lib/logger')
 
 module.exports = app => {
   // gooogle
@@ -9,7 +10,14 @@ module.exports = app => {
     })
   )
 
-  app.get('/auth/google/callback', passport.authenticate('google'))
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+      Logger('Successful login, redirecting to /')
+      res.redirect('/')
+    }
+  )
 
   // bungie
   app.get('/auth/bungie', passport.authenticate('oauth2'))
@@ -19,6 +27,7 @@ module.exports = app => {
     passport.authenticate('oauth2', { failureRedirect: '/login' }),
     (req, res) => {
       // Successful authentication, redirect home.
+      Logger('Successful login, redirecting to /')
       res.redirect('/')
     }
   )

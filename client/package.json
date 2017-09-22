@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "auth/*": {
-      "target": "https://localhost:5000"
+    "/auth/*": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
