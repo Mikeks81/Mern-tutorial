@@ -24,8 +24,9 @@ app.use(passport.initialize())
 // use passport to set session cookies on client browser
 app.use(passport.session())
 
-// authroutes returns a function and we call it and poss app value into thtat function
+// routes returns a function and we call it and poss app value into thtat function
 require('./routes/authRoutes')(app)
+require('./routes/billingRoutes')(app)
 
 // loading up ssl certs if in something other than production -- heroku has it's own certs
 let httpsOptions = {}
