@@ -5,6 +5,7 @@ const userSchema = new Schema({
   givenName: String,
   familyName: String,
   displayName: String,
+  name: Schema.Types.Mixed,
   gender: String,
   emails: [],
   googleId: String,

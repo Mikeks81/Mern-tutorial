@@ -6,5 +6,7 @@ module.exports = {
   bungieApiKey: process.env.BUNGIE_API_KEY,
   siteHost: 'https://cryptic-plateau-44984.herokuapp.com',
   mongoURI: process.env.MONGO_URI,
-  cookieKey: process.env.COOKIE_KEY
+  cookieKey: process.env.COOKIE_KEY,
+  stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+  stripeSecret: process.env.STRIPE_SECRET
 }

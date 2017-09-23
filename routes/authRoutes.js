@@ -12,10 +12,10 @@ module.exports = app => {
 
   app.get(
     '/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-      Logger('Successful login, redirecting to /')
-      res.redirect('/')
+      Logger('Successful login, redirecting to /surveys')
+      res.redirect('/surveys')
     }
   )
 
@@ -24,7 +24,7 @@ module.exports = app => {
 
   app.get(
     '/auth/bungie/callback',
-    passport.authenticate('oauth2', { failureRedirect: '/login' }),
+    passport.authenticate('oauth2', { failureRedirect: '/' }),
     (req, res) => {
       // Successful authentication, redirect home.
       Logger('Successful login, redirecting to /')
@@ -35,7 +35,7 @@ module.exports = app => {
   // user flow
   app.get('/api/logout', (req, res) => {
     req.logout()
-    res.send(req.user)
+    res.redirect('/')
   })
 
   app.get('/api/current_user', (req, res) => {

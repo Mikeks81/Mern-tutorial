@@ -3,3 +3,4 @@ dev.js
 key.pem
 keytmp.pem
 cert.pem
+client/.env*
