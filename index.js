@@ -5,6 +5,7 @@ const fs = require('fs')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const keys = require('./config/keys')
+const bodyParser = require('body-parser')
 require('./models/User')
 require('./services/passport')
 
@@ -12,6 +13,9 @@ require('./services/passport')
 mongoose.connect(keys.mongoURI)
 
 const app = express()
+
+// user bodyParse to parse the request body to req.body
+app.use(bodyParser.json())
 app.use(
   cookieSession({
     // cookie expires in 30 days (in milliseconds)

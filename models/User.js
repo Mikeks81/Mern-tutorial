@@ -17,6 +17,7 @@ const userSchema = new Schema({
   refreshExp: Number,
   refreshSet: Date,
   accessType: String,
+  credits: { type: Number, default: 0 },
   lastLogIn: Date,
   logInCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
