@@ -32,6 +32,22 @@ app.use(passport.session())
 require('./routes/authRoutes')(app)
 require('./routes/billingRoutes')(app)
 
+//made for routing in production ( where there isnt two servers but the client is just static files)
+if (process.env.NODE_ENV === 'production') {
+  // Express will serve up production assets
+  // like our main.js file or main.css file!
+  // if express sees get req for something and doesn't recognize it in any of the defined routes above then it will search client/build for a file that matches what the get req is looking for and respond
+  app.use(express.static('client/build'))
+
+  // Express will serve up the index.html file
+  // if it doesn't recognize the route
+  // so if the route doesn't match a file from above ( client/build ) serve up the react index.html file and let react handle the route.
+  const path = require('path')
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
+
 // loading up ssl certs if in something other than production -- heroku has it's own certs
 let httpsOptions = {}
 if (process.env.NODE_ENV !== 'production') {
