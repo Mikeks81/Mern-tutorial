@@ -1,6 +1,7 @@
 const Logger = require('../lib/logger')
 const keys = require('../config/keys')
 const stripe = require('stripe')(keys.stripeSecret)
+// custom middleware for checking authentication on a req this middle ware is added the get/post request method as an argument. Maybe any argument except the first or last
 const requireLogin = require('../middlewares/requireLogin')
 
 module.exports = app => {

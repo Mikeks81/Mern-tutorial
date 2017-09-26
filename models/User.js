@@ -20,6 +20,7 @@ const userSchema = new Schema({
   credits: { type: Number, default: 0 },
   lastLogIn: Date,
   logInCount: { type: Number, default: 0 },
+  updatedAt: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now }
 })
 

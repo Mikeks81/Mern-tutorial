@@ -5,8 +5,12 @@ const fs = require('fs')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const keys = require('./config/keys')
+// express doesn't parse the req body for you so we need an additional library
 const bodyParser = require('body-parser')
+// requiring so that the schema gets ran and configured at run time
 require('./models/User')
+require('./models/Survey')
+// requiring so that passport services are configured at run time
 require('./services/passport')
 
 // connecting to mongodDB via mongoose
@@ -31,8 +35,9 @@ app.use(passport.session())
 // routes returns a function and we call it and poss app value into thtat function
 require('./routes/authRoutes')(app)
 require('./routes/billingRoutes')(app)
+require('./routes/surveysRoutes')(app)
 
-//made for routing in production ( where there isnt two servers but the client is just static files)
+// made for routing in production ( where there isnt two servers but the client is just static files)
 if (process.env.NODE_ENV === 'production') {
   // Express will serve up production assets
   // like our main.js file or main.css file!
@@ -71,3 +76,9 @@ if (true || process.env.NODE_ENV === 'production') {
     console.log('server running at ' + PORT)
   })
 }
+
+// the line below ffound under scripts in packaage.json is telling Heroku that after build of server production dependencies to now install developement dependencies for every command after, then runs npm install with prefix client ( so runs npm install for in the client folder for the react part of the app) and once done also npm build the react app as well.
+
+// By default on each deployment NPM_CONFIG_PRODUCTION is set to true and we need to turn it off after server production dependencies have been installed.
+
+// "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
