@@ -37,7 +37,7 @@ class Mailer extends helper.Mail {
     this.recipients.forEach(recipient => {
       personalize.addTo(recipient)
     })
-    this.addPersonalization(personalizes)
+    this.addPersonalization(personalize)
   }
 
   async send() {
@@ -48,7 +48,7 @@ class Mailer extends helper.Mail {
       body: this.toJSON()
     })
 
-    const response = this.sgApi.API(request)
+    const response = await this.sgApi.API(request)
     return response
   }
 }

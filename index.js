@@ -36,6 +36,7 @@ app.use(passport.session())
 require('./routes/authRoutes')(app)
 require('./routes/billingRoutes')(app)
 require('./routes/surveysRoutes')(app)
+require('./routes/bungieRoutes')(app)
 
 // made for routing in production ( where there isnt two servers but the client is just static files)
 if (process.env.NODE_ENV === 'production') {
