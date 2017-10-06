@@ -1,15 +1,19 @@
 const axios = require('axios')
 const keys = require('../../config/keys')
+const Logger = require('../../lib/logger')
 
 class Bungie {
   async get(endpoint, options = {}, cb) {
     try {
+      Logger(`fetching ${keys.bungieBaseUrl}${endpoint}`)
       const response = await axios(`${keys.bungieBaseUrl}${endpoint}`, {
         headers: { 'X-API-KEY': keys.bungieApiKey }
       })
-      cb(response.data)
+      if (cb) cb(response.data)
+      return response.data
     } catch (error) {
-      cb(error)
+      if (cb) cb(error)
+      return error
     }
   }
 
