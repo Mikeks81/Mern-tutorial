@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_PLAYER, FETCH_GEAR } from './types'
+import { FETCH_PLAYER } from './types'
 
 export const fetchPlayer = playerName => async dispatch => {
   const res = await axios.get(`/api/player`, {
@@ -12,10 +12,14 @@ export const fetchPlayer = playerName => async dispatch => {
 
 export const fetchGearDetails = (
   membershipId,
-  instanceHash
+  instanceHash,
+  callback
 ) => async dispatch => {
   const res = await axios.get(
     `/api/itemInstance/${membershipId}/${instanceHash}`
   )
+
+  typeof callback === 'function' && callback(res)
+
   return res
 }

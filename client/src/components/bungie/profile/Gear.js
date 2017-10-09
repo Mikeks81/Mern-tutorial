@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import * as actions from '../../../actions/fetchBungie'
 
 class Gear extends Component {
   constructor() {
@@ -11,23 +9,24 @@ class Gear extends Component {
   }
 
   theGears() {
-    const arr = this.props.items.map(async item => {
-      console.log(item)
-      return await this.props.fetchGearDetails(
+    const gearArr = []
+    this.props.items.forEach(item => {
+      this.props.fetchGearDetails(
         this.props.membershipId,
-        item.itemInstanceId
+        item.itemInstanceId,
+        res => {
+          gearArr.push(res)
+          this.setState({
+            gearDetails: gearArr
+          })
+        }
       )
-    })
-    Promise.all(arr).then(arr => {
-      this.setState(prevState => ({
-        gearDetails: [...prevState.gearDetails, ...arr]
-      }))
     })
   }
 
   gearComponent({ data }) {
     return (
-      <div>
+      <div key={data.itemDefinition.hash}>
         <p>{data.itemDefinition.displayProperties.name}</p>
         <img
           src={`http://bungie.net/${data.itemDefinition.displayProperties
@@ -42,13 +41,12 @@ class Gear extends Component {
   }
 
   render() {
-    console.log('GEARR ', this.state)
+    // console.log('GEARR ', this.state)
     return (
       <div>
         <p>item</p>
         <div>
           {this.state.gearDetails.map(item => {
-            console.log('running!!', item)
             return this.gearComponent(item)
           })}
         </div>
@@ -57,4 +55,4 @@ class Gear extends Component {
   }
 }
 
-export default connect(null, actions)(Gear)
+export default Gear
