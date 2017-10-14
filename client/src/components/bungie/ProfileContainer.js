@@ -20,7 +20,8 @@ class ProfileContainer extends Component {
         }
         const gearProps = {
           items: profile.items,
-          membershipId: profile.membershipId
+          membershipId: profile.membershipId,
+          characterId: profile.characterId
         }
         return (
           <div key={i}>

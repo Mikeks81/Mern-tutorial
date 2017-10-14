@@ -1,0 +1,24 @@
+.gear-container {
+  height: 75px;
+  margin-bottom: 15px;
+}
+
+.gear-container.pre-loader {
+  padding-left: 15px;
+}
+
+.gear-container img {
+  width: 30%;
+  display: inline-block;
+}
+
+.gear-details {
+  float: right;
+  width: 70%;
+  padding: 5px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.gear-details p {
+  margin: 2px 0 2px 5px;
+}

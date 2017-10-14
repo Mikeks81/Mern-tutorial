@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './Banner.css'
 
 class Banner extends Component {
   jobClassName(jobClass) {
@@ -11,25 +12,27 @@ class Banner extends Component {
   }
 
   render() {
-    console.log('PROFILE ', this.props)
     return (
       <div>
-        <p>profiles</p>
         <div
+          className="banner-container"
           style={{
             background: `url(https://bungie.net${this.props
-              .emblemBackgroundPath}) no-repeat left top`,
-            height: '100px',
-            backgroundSize: 'contain'
+              .emblemBackgroundPath}) no-repeat left center`,
+            backgroundSize: 'cover'
           }}
         >
-          <p>{this.props.displayName}</p>
-          <p>{this.jobClassName(this.props.classType)}</p>
-          <p>Level {this.props.baseCharacterLevel}</p>
-          <p>{this.props.light}</p>
+          <div className="banner-content">
+            <p>
+              {this.props.displayName}
+              <span> {this.jobClassName(this.props.classType)}</span>
+            </p>
+            <p>
+              Level {this.props.baseCharacterLevel} // {this.props.light}
+            </p>
+            <p />
+          </div>
         </div>
-
-        <img src={`https://bungie.net${this.props.emblemPath}`} />
       </div>
     )
   }

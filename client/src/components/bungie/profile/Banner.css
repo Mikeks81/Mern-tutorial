@@ -1,0 +1,29 @@
+.banner-container {
+  height: 100px;
+  background-size: cover;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.banner-content {
+  margin-left: 25%;
+}
+
+.banner-content p {
+  color: white;
+  margin: 3px 0;
+}
+
+.banner-content p:first-child {
+  font-size: 2rem;
+}
+
+.banner-content p:first-child span {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.banner-content p:nth-of-type(2) {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.5);
+}
