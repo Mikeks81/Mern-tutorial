@@ -1,0 +1,19 @@
+.profile-container {
+  overflow: hidden;
+  position: relative;
+}
+.profile-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.profile-nav i {
+  margin-top: 32px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.profile-carousel {
+  width: 320%;
+}
