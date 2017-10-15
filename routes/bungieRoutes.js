@@ -5,8 +5,8 @@ const Bungie = require('../services/Bungie/apiCalls')
 const bungie = new Bungie()
 
 module.exports = app => {
-  app.get('/api/profile', requireLogin, (req, res) => {
-    const data = bungie.get(
+  app.get('/api/profile', requireLogin, async (req, res) => {
+    await bungie.get(
       `/User/GetBungieNetUserById/${req.user.bungieId}/`,
       {},
       data => {
@@ -37,7 +37,7 @@ module.exports = app => {
       `/Destiny2/Manifest/DestinyInventoryItemDefinition/${itemFetch.Response
         .item.data.itemHash}`
     )
-    itemObj = {
+    const itemObj = {
       itemFetch: itemFetch.Response,
       itemDefinition: itemDisplayObj.Response
     }
