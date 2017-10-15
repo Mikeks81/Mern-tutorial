@@ -23,41 +23,6 @@ module.exports = app => {
       `/Destiny2/2/Profile/${memberId.Response[0]
         .membershipId}?components=100,200,202,205`
     )
-    // console.log(
-    //   playerCharacters.Response.characterEquipment.data['2305843009265591113']
-    //     .items
-    // )
-    // WORK OUT A MORE EFFICIENT WAY... LOAD ON CLIENT REQUEST -- TAKES 4-5 SECONSD TO LOAD
-    // let charItemsInfo = {}
-    // for (var character in playerCharacters.Response.characterEquipment.data) {
-    //   let instanceIds = await Promise.all(
-    //     playerCharacters.Response.characterEquipment.data[
-    //       character
-    //     ].items.map(async key => {
-    //       const instance = key.itemInstanceId
-    //       console.log(
-    //         '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ',
-    //         instance
-    //       )
-    //
-    //       let itemFetch = await bungie.get(
-    //         `/Destiny2/2/Profile/${memberId.Response[0]
-    //           .membershipId}/Item/${key.itemInstanceId}?components=300,301,302,303,304,305,306,307`
-    //       )
-    //       console.log('------------- ', itemFetch.Response.item.data.itemHash)
-    //       let item = { [instance]: itemFetch }
-    //       return item
-    //     })
-    //   )
-    //   charItemsInfo[character] = Object.assign({}, ...instanceIds)
-    //   console.log('#$%%@#$%@#$ ', charItemsInfo)
-    // }
-    //
-    // console.log(
-    //   'GSSERGSRESR ',
-    //   charItemsInfo['2305843009265591113']['6917529036434304692']
-    // )
-
     res.send(playerCharacters)
   })
 
@@ -77,6 +42,21 @@ module.exports = app => {
       itemDefinition: itemDisplayObj.Response
     }
     res.send(itemObj)
+  })
+
+  app.get('/api/get_user_group/:user_name', async (req, res) => {})
+
+  app.get('/api/get_group_details/:group_id', async (req, res) => {
+    const { group_id } = req.params
+
+    const groupDetails = await bungie.get(`/GroupV2/${group_id}/`)
+  })
+
+  app.get('/api/get_group_members/:group_id', async (req, res) => {
+    const { group_id } = req.params
+    const groupDetails = await bungie.get(
+      `/GroupV2/${group_id}/Members?memberType=0&currentpage=1`
+    )
   })
 }
 
