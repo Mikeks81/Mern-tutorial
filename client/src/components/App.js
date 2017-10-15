@@ -6,6 +6,7 @@ import Landing from './Landing'
 import Dashboard from './Dashboard'
 import SurveyNew from './surveys/SurveyNew'
 import ProfileContainer from './bungie/ProfileContainer'
+import GroupViewer from './bungie/groups/GroupViewer'
 import * as actions from '../actions'
 
 class App extends Component {
@@ -22,7 +23,8 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/surveys" component={Dashboard} />
             <Route path="/surveys/new" component={SurveyNew} />
-            <Route path="/player" component={ProfileContainer} />
+            <Route exact path="/player" component={ProfileContainer} />
+            <Route path="/player/:playerName/group" component={GroupViewer} />
           </div>
         </BrowserRouter>
       </div>

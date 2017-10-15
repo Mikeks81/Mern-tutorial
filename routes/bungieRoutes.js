@@ -44,7 +44,13 @@ module.exports = app => {
     res.send(itemObj)
   })
 
-  app.get('/api/get_user_group/:user_name', async (req, res) => {})
+  app.get('/api/get_user_group/:user_id', async (req, res) => {
+    const { group_id } = req.params
+    const { Response } = await bungie.get(
+      `/GroupV2/User/2/4611686018458111348/0/1/`
+    )
+    res.send(Response)
+  })
 
   app.get('/api/get_group_details/:group_id', async (req, res) => {
     const { group_id } = req.params
