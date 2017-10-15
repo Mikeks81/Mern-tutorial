@@ -49,11 +49,7 @@ module.exports = app => {
     const { Response } = await bungie.get(
       `/GroupV2/User/2/4611686018458111348/0/1/`
     )
-<<<<<<< HEAD
     res.send(Response)
-=======
-    res.send(Response[0])
->>>>>>> 76d32c73bf35a5d6f4162a58c060ba1650e1fe9b
   })
 
   app.get('/api/get_group_details/:group_id', async (req, res) => {
