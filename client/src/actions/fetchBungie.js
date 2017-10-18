@@ -7,7 +7,8 @@ export const fetchPlayer = playerName => async dispatch => {
       player: playerName
     }
   })
-  dispatch({ type: FETCH_PLAYER, payload: res.data })
+
+  return res.data
 }
 
 export const fetchGearDetails = (
@@ -25,8 +26,16 @@ export const fetchGearDetails = (
 }
 
 export const fetchUserGroup = playerName => async dispatch => {
-  console.log('fetching group', playerName)
-  const res = await axios.get(`/api/get_user_group/${playerName}`)
+  const group = await axios.get(`/api/get_user_group/${playerName}`)
 
-  dispatch({ type: FETCH_GROUP, payload: res.data })
+  const groupRoster = await axios.get(
+    `/api/get_group_members/${group.data.results[0].group.groupId}`
+  )
+
+  const groupDetails = {
+    groupDetails: { ...group.data },
+    groupMembers: { ...groupRoster.data.Response }
+  }
+
+  dispatch({ type: FETCH_GROUP, payload: groupDetails })
 }

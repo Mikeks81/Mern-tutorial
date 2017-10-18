@@ -63,6 +63,8 @@ module.exports = app => {
     const groupDetails = await bungie.get(
       `/GroupV2/${group_id}/Members?memberType=0&currentpage=1`
     )
+
+    res.send(groupDetails)
   })
 }
 

@@ -4,16 +4,27 @@ import * as actions from '../../actions/fetchBungie'
 import Profile from './profile/Banner'
 import Gear from './profile/Gear'
 import { TweenLite, Power3 } from 'gsap'
+import axios from 'axios'
 import './ProfileContainer.css'
 
 class ProfileContainer extends Component {
   constructor() {
     super()
     this.isSlide = 0
+    this.state = {
+      bungieProfile: ''
+    }
   }
+  async fetchPlayer(playerName) {
+    const res = await this.props.fetchPlayer(playerName)
+
+    this.setState({
+      bungieProfile: res
+    })
+  }
+
   componentDidMount() {
-    console.log(this.props, actions)
-    this.props.fetchPlayer('DirtiSausage')
+    this.fetchPlayer(this.props.charName || 'DirtiSausage')
   }
 
   navLeft() {
@@ -60,12 +71,12 @@ class ProfileContainer extends Component {
   }
 
   renderProfiles() {
-    return this.props.bungieProfile.Response.profile.data.characterIds.map(
+    return this.state.bungieProfile.Response.profile.data.characterIds.map(
       (cId, i) => {
         const profile = {
-          ...this.props.bungieProfile.Response.characters.data[cId],
-          ...this.props.bungieProfile.Response.profile.data.userInfo,
-          ...this.props.bungieProfile.Response.characterEquipment.data[cId]
+          ...this.state.bungieProfile.Response.characters.data[cId],
+          ...this.state.bungieProfile.Response.profile.data.userInfo,
+          ...this.state.bungieProfile.Response.characterEquipment.data[cId]
         }
         const gearProps = {
           items: profile.items,
@@ -87,20 +98,17 @@ class ProfileContainer extends Component {
 
   render() {
     return (
-      <div className="profile-container">
+      <div
+        className={`profile-container ${this.props.charName} ${this.props
+          .className}`}
+      >
         {this.profileNav()}
         <div className="profile-carousel row" ref="profileCarousel">
-          {this.props.bungieProfile && this.renderProfiles()}
+          {this.state.bungieProfile && this.renderProfiles()}
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps({ bungie }) {
-  return {
-    bungieProfile: bungie
-  }
-}
-
-export default connect(mapStateToProps, actions)(ProfileContainer)
+export default connect(null, actions)(ProfileContainer)

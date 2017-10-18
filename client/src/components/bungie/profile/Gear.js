@@ -18,17 +18,19 @@ class Gear extends Component {
         this.props.membershipId,
         item.itemInstanceId,
         res => {
-          const {
-            equipmentSlotTypeHash
-          } = res.data.itemDefinition.equippingBlock
+          if (res.data.itemDefinition) {
+            const {
+              equipmentSlotTypeHash
+            } = res.data.itemDefinition.equippingBlock
 
-          if (gManifestJson[equipmentSlotTypeHash]) {
-            newMapState[equipmentSlotTypeHash] = { value: res.data }
+            if (gManifestJson[equipmentSlotTypeHash]) {
+              newMapState[equipmentSlotTypeHash] = { value: res.data }
+            }
+
+            this.setState({
+              mapGear: newMapState
+            })
           }
-
-          this.setState({
-            mapGear: newMapState
-          })
         }
       )
     })
