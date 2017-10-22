@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import SurveyField from './SurveyField'
 import { Link } from 'react-router-dom'
+import validateEmails from '../../utils/validateEmails'
 import _ from 'lodash'
-
-const FIELDS = [
-  { label: 'Survey Title', name: 'title' },
-  { label: 'Subject Line', name: 'subject' },
-  { label: 'Email Body', name: 'body' },
-  { label: 'Recipient List', name: 'emails' }
-]
+import formFields from './formFields'
 
 class SurveyForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name }) => {
+    return _.map(formFields, ({ label, name }) => {
       return (
         <Field
           key={name}
@@ -28,7 +23,7 @@ class SurveyForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+      <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
         {this.renderFields()}
         <Link to="/surveys" className="red btn-flat white-text">
           {' '}
@@ -43,10 +38,12 @@ class SurveyForm extends Component {
   }
 }
 function validate(values) {
-  // if redux form gets empty object back from this function it assumes 0 errors
+  // if redux form gets empty object back or a property that is undefined or null it assumes 0 errors
   const errors = {}
 
-  _.each(FIELDS, ({ name }) => {
+  errors.emails = validateEmails(values.emails || '')
+
+  _.each(formFields, ({ name }) => {
     if (!values[name]) {
       errors[name] = 'You must provide a value'
     }
@@ -57,5 +54,6 @@ function validate(values) {
 
 export default reduxForm({
   validate,
-  form: 'surveyForm'
+  form: 'surveyForm',
+  destroyOnUnmount: false
 })(SurveyForm)

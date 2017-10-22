@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Spinner from '../../Utils/Spinner'
+import Spinner from '../../../utils/Spinner'
 import gManifestJson from '../../../lib/gearManifest.json'
 import './Gear.css'
 
