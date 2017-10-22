@@ -41,7 +41,7 @@ function validate(values) {
   // if redux form gets empty object back or a property that is undefined or null it assumes 0 errors
   const errors = {}
 
-  errors.emails = validateEmails(values.emails || '')
+  errors.recipients = validateEmails(values.recipients || '')
 
   _.each(formFields, ({ name }) => {
     if (!values[name]) {
