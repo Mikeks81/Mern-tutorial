@@ -2,6 +2,10 @@
   overflow: hidden;
   position: relative;
 }
+
+.profile-container .card-panel {
+  padding: 0;
+}
 .profile-nav {
   position: absolute;
   top: 0;

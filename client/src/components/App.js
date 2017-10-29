@@ -8,6 +8,7 @@ import SurveyNew from './surveys/SurveyNew'
 import ProfileContainer from './bungie/ProfileContainer'
 import GroupViewer from './bungie/groups/GroupViewer'
 import * as actions from '../actions'
+import './App.css'
 
 class App extends Component {
   componentDidMount() {

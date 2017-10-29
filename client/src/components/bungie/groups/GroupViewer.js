@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Spinner from '../../Utils/Spinner'
+import Spinner from '../../../utils/Spinner'
 import ProfileContainer from '../ProfileContainer'
 import * as actions from '../../../actions/fetchBungie'
 
@@ -22,7 +22,7 @@ class GroupViewer extends Component {
             }]
           </p>
           <div className="row">
-            {this.props.bungie.groupMembers.results.map(member => {
+            {this.props.bungie.groupMembers.results.map((member, i) => {
               return (
                 <ProfileContainer
                   className="col s4"

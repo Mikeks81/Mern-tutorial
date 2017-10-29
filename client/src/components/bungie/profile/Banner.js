@@ -18,8 +18,7 @@ class Banner extends Component {
           className="banner-container"
           style={{
             background: `url(https://bungie.net${this.props
-              .emblemBackgroundPath}) no-repeat left center`,
-            backgroundSize: 'cover'
+              .emblemBackgroundPath}) no-repeat left center`
           }}
         >
           <div className="banner-content">

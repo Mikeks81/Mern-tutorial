@@ -4,8 +4,8 @@ import gManifestJson from '../../../lib/gearManifest.json'
 import './Gear.css'
 
 class Gear extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       mapGear: {}
     }
@@ -26,7 +26,6 @@ class Gear extends Component {
             if (gManifestJson[equipmentSlotTypeHash]) {
               newMapState[equipmentSlotTypeHash] = { value: res.data }
             }
-
             this.setState({
               mapGear: newMapState
             })
@@ -36,7 +35,7 @@ class Gear extends Component {
     })
   }
 
-  gearComponent(item) {
+  gearComponent(item, key) {
     if (item && item.value) {
       const { value } = item
       return (
@@ -57,8 +56,8 @@ class Gear extends Component {
       )
     } else {
       return (
-        <div className="gear-container pre-loader">
-          <Spinner />
+        <div key={key} className="gear-container pre-loader">
+          <Spinner key={key} />
         </div>
       )
     }
@@ -68,21 +67,27 @@ class Gear extends Component {
     this.theGears()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.items !== prevProps.items) {
+      this.theGears()
+    }
+  }
+
   render() {
     return (
-      <div>
+      <div className="parent-gear-container">
         <div className="row">
           <div className="col s6 weapons left">
-            {this.gearComponent(this.state.mapGear[1498876634])}
-            {this.gearComponent(this.state.mapGear[2465295065])}
-            {this.gearComponent(this.state.mapGear[953998645])}
+            {this.gearComponent(this.state.mapGear[1498876634], 1)}
+            {this.gearComponent(this.state.mapGear[2465295065], 2)}
+            {this.gearComponent(this.state.mapGear[953998645], 3)}
           </div>
           <div className="col s6 armor right">
-            {this.gearComponent(this.state.mapGear[3448274439])}
-            {this.gearComponent(this.state.mapGear[14239492])}
-            {this.gearComponent(this.state.mapGear[3551918588])}
-            {this.gearComponent(this.state.mapGear[20886954])}
-            {this.gearComponent(this.state.mapGear[1585787867])}
+            {this.gearComponent(this.state.mapGear[3448274439], 4)}
+            {this.gearComponent(this.state.mapGear[14239492], 5)}
+            {this.gearComponent(this.state.mapGear[3551918588], 6)}
+            {this.gearComponent(this.state.mapGear[20886954], 7)}
+            {this.gearComponent(this.state.mapGear[1585787867], 8)}
           </div>
         </div>
       </div>

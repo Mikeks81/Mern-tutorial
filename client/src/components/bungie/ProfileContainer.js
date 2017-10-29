@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions/fetchBungie'
 import Profile from './profile/Banner'
 import Gear from './profile/Gear'
+import Search from './search/Search'
 import { TweenLite, Power3 } from 'gsap'
-import axios from 'axios'
 import './ProfileContainer.css'
 
 class ProfileContainer extends Component {
@@ -15,16 +15,16 @@ class ProfileContainer extends Component {
       bungieProfile: ''
     }
   }
+
   async fetchPlayer(playerName) {
     const res = await this.props.fetchPlayer(playerName)
-
     this.setState({
       bungieProfile: res
     })
   }
 
   componentDidMount() {
-    this.fetchPlayer(this.props.charName || 'DirtiSausage')
+    if (this.props.charName) this.fetchPlayer(this.props.charName)
   }
 
   navLeft() {
@@ -85,11 +85,13 @@ class ProfileContainer extends Component {
         }
         return (
           <div className="profile-content col s4" key={i}>
-            <Profile {...profile} />
-            <Gear
-              {...gearProps}
-              fetchGearDetails={this.props.fetchGearDetails}
-            />
+            <div className="card-panel">
+              <Profile {...profile} />
+              <Gear
+                {...gearProps}
+                fetchGearDetails={this.props.fetchGearDetails}
+              />
+            </div>
           </div>
         )
       }
@@ -98,13 +100,15 @@ class ProfileContainer extends Component {
 
   render() {
     return (
-      <div
-        className={`profile-container ${this.props.charName} ${this.props
-          .className}`}
-      >
-        {this.profileNav()}
-        <div className="profile-carousel row" ref="profileCarousel">
-          {this.state.bungieProfile && this.renderProfiles()}
+      <div className={this.props.className}>
+        {!this.props.charName && (
+          <Search fetchPlayer={this.fetchPlayer.bind(this)} />
+        )}
+        <div className={`profile-container ${this.props.charName}`}>
+          {this.profileNav()}
+          <div className="profile-carousel row" ref="profileCarousel">
+            {this.state.bungieProfile && this.renderProfiles()}
+          </div>
         </div>
       </div>
     )

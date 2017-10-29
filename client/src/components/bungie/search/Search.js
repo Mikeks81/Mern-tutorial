@@ -1,16 +1,36 @@
 import React, { Component } from 'react'
 
 class Search extends Component {
+  constructor() {
+    super()
+    this.state = { value: '' }
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value })
+  }
+  handleSubmit(e) {
+    e.preventDefault()
+    console.log(this.state.value)
+    this.props.fetchPlayer(this.state.value)
+  }
+
   render() {
     return (
-      <div className="input-field col s6">
-        <input
-          placeholder="Placeholder"
-          id="first_name"
-          type="text"
-          className="validate"
-        />
-        <label for="first_name">First Name</label>
+      <div className="row">
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <div className="input-field col s12">
+            <input
+              placeholder="Search Gaurdians"
+              id="guardian-search"
+              type="text"
+              className="validate"
+              name="guardian-search"
+              onChange={this.handleChange.bind(this)}
+              value={this.state.value}
+            />
+          </div>
+        </form>
       </div>
     )
   }

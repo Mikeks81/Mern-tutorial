@@ -1,6 +1,6 @@
 .banner-container {
   height: 100px;
-  background-size: cover;
+  background-size: cover !important;
   padding: 10px;
   margin-bottom: 15px;
 }
