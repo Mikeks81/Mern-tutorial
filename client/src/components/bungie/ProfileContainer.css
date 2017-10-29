@@ -1,6 +1,7 @@
 .profile-container {
   overflow: hidden;
   position: relative;
+  max-width: 450px;
 }
 
 .profile-container .card-panel {

@@ -18,9 +18,21 @@ class ProfileContainer extends Component {
 
   async fetchPlayer(playerName) {
     const res = await this.props.fetchPlayer(playerName)
-    this.setState({
-      bungieProfile: res
-    })
+    this.setState(
+      {
+        bungieProfile: res
+      },
+      () => {
+        const { profileCarousel } = this.refs
+        TweenLite.to(profileCarousel, 0.5, {
+          xPercent: '0',
+          ease: Power3.easeIn,
+          onComplete: () => {
+            this.isSlide = 0
+          }
+        })
+      }
+    )
   }
 
   componentDidMount() {
