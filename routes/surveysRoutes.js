@@ -23,7 +23,7 @@ module.exports = app => {
     })
   })
 
-  app.get('/api/surveys/thanks', (req, res) => {
+  app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send('Thanks for voting!')
   })
 
@@ -56,15 +56,31 @@ module.exports = app => {
   app.post('/api/surveys/webhooks', (req, res) => {
     const p = new Path('/api/surveys/:surveyId/:choice')
 
-    const events = _.map(req.body, ({ email, url }) => {
-      // p.test(pathname) returns an object - { surveyId: 9823472, choice: 'yes/no'}
-      const match = p.test(new URL(url).pathname)
-      if (match) return { email, ...match }
-    })
-    const compactEvents = _.compact(events)
-    const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId')
-
-    console.log(uniqueEvents)
+    // chain allows you to chain methods. what is returned from the chained method call is automatically passed to the chain item below. so the returned value from the map function is automatically passed in to compact without explicitly passing the arugument
+    _.chain(req.body)
+      .map(({ email, url }) => {
+        // p.test(pathname) returns an object - { surveyId: 9823472, choice: 'yes/no'}
+        const match = p.test(new URL(url).pathname)
+        if (match) return { email, ...match }
+      })
+      .compact()
+      .uniqBy('email', 'surveyId')
+      .each(({ surveyId, email, choice }) => {
+        Survey.updateOne(
+          {
+            _id: surveyId,
+            recipients: {
+              $elemMatch: { email: email, responded: false }
+            }
+          },
+          {
+            $inc: { [choice]: 1 },
+            $set: { 'recipients.$.responded': true },
+            lastResponded: new Date()
+          }
+        ).exec()
+      })
+      .value()
 
     res.send({})
   })
