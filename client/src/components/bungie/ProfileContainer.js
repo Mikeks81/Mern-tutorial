@@ -12,7 +12,8 @@ class ProfileContainer extends Component {
     super()
     this.isSlide = 0
     this.state = {
-      bungieProfile: ''
+      bungieProfile: '',
+      enableCarousel: false
     }
   }
 
@@ -20,7 +21,9 @@ class ProfileContainer extends Component {
     const res = await this.props.fetchPlayer(playerName)
     this.setState(
       {
-        bungieProfile: res
+        bungieProfile: res,
+        enableCarousel: res.Response.profile.data.characterIds.length > 1,
+        slideLimit: res.Response.profile.data.characterIds.length
       },
       () => {
         const { profileCarousel } = this.refs
@@ -52,7 +55,7 @@ class ProfileContainer extends Component {
   }
 
   navRight() {
-    if (this.isSlide >= 2) return
+    if (this.isSlide >= this.state.slideLimit - 1) return
     const { profileCarousel } = this.refs
     TweenLite.to(profileCarousel, 0.5, {
       xPercent: '-=33.33',
@@ -64,6 +67,7 @@ class ProfileContainer extends Component {
   }
 
   profileNav() {
+    if (!this.state.enableCarousel) return null
     return (
       <div className="profile-nav">
         <i
@@ -83,7 +87,7 @@ class ProfileContainer extends Component {
   }
 
   renderProfiles() {
-    return this.state.bungieProfile.Response.profile.data.characterIds.map(
+    let profiles = this.state.bungieProfile.Response.profile.data.characterIds.map(
       (cId, i) => {
         const profile = {
           ...this.state.bungieProfile.Response.characters.data[cId],
@@ -108,6 +112,7 @@ class ProfileContainer extends Component {
         )
       }
     )
+    return profiles
   }
 
   render() {
