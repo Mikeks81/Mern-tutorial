@@ -19,6 +19,7 @@ module.exports = app => {
     const memberId = await bungie.get(
       `/Destiny2/SearchDestinyPlayer/2/${req.query.player}/`
     )
+    console.log(' fetching ', req.query.player)
     let playerCharacters = await bungie.get(
       `/Destiny2/2/Profile/${memberId.Response[0]
         .membershipId}?components=100,200,202,205`
