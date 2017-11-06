@@ -9,6 +9,8 @@ import ProfileContainer from './bungie/ProfileContainer'
 import GroupViewer from './bungie/groups/GroupViewer'
 import * as actions from '../actions'
 import './App.css'
+import axios from 'axios'
+window.axios = axios
 
 class App extends Component {
   componentDidMount() {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_USER } from './types'
+import { FETCH_USER, FETCH_SURVEYS } from './types'
 // this syntax is fucking confusing and i def don't think easier to read so i'm including a readable refactor of the function below
 /*
 +const fetchUser = () => {
@@ -35,4 +35,10 @@ export const submitSurvey = (values, history) => async dispatch => {
 
   history.push('/surveys')
   dispatch({ type: FETCH_USER, payload: res.data })
+}
+
+export const fetchSurveys = () => async dispatch => {
+  const res = await axios.get('api/surveys')
+
+  dispatch({ type: FETCH_SURVEYS, payload: res.data })
 }

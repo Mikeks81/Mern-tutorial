@@ -13,6 +13,8 @@ require('./models/Survey')
 // requiring so that passport services are configured at run time
 require('./services/passport')
 
+// solves deprication errros amongst other things i'm sure
+mongoose.Promise = global.Promise
 // connecting to mongodDB via mongoose
 mongoose.connect(keys.mongoURI)
 

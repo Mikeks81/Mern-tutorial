@@ -4,23 +4,18 @@ const { URL } = require('url')
 const mongoose = require('mongoose')
 const requireLogin = require('../middlewares/requireLogin')
 const requireCredits = require('../middlewares/requireCredits')
-const Logger = require('../lib/logger')
 const Mailer = require('../services/Mailer')
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate')
 
 const Survey = mongoose.model('surveys')
 
 module.exports = app => {
-  app.get('/api/surveys', requireLogin, (req, res) => {
-    Survey.find({}, async (err, docs) => {
-      try {
-        const surveys = await docs
-        res.send(surveys)
-      } catch (err) {
-        Logger(err)
-        res.status(500).send({ error: 'Internal Server Error' })
-      }
+  app.get('/api/surveys', requireLogin, async (req, res) => {
+    const surveys = await Survey.find({ _user: req.user.id }).select({
+      recipients: false
     })
+
+    res.send(surveys)
   })
 
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
